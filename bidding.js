@@ -1,30 +1,12 @@
-document.getElementById("bidDisplay").onload = showHistory();
-
-function showHistory() {
-    let history = JSON.parse(localStorage.getItem("userBids"));
-    document.getElementById("bidDisplay").innerHTML = history;
+const localStorageContent = localStorage.getItem("userBids");
+let bids;
+if(localStorageContent === null) {
+    bids = [];
+} else {
+    bids = JSON.parse(localStorage.getItem("userBids"));
 }
-
-const bids = [
-    {
-        user: "User1",
-        bid: "$0.00"
-    },
-    {
-        user: "User2",
-        bid: "0.00"
-    }
-]
-
-function render() {
-    let temp = JSON.parse(localStorage.getItem("userBids"));
-    let bidsHtml = "<ul class='list-group'>";
-    bidsHtml += "</ul>"
-    temp.forEach((list) => {
-        bidsHtml += `<li class="list-group-item">${list.user} ${list.bid}</li>`;
-      });
-    document.getElementById("bidDisplay").innerHTML = bidsHtml;
-}
+document.getElementById("bidDisplay").innerHTML = 
+JSON.parse(localStorage.getItem("userBids"));
 
 function placeBid1() {
     let text = document.getElementById("user1Bid").value;
@@ -39,6 +21,7 @@ function placeBid1() {
     }
     document.getElementById("user1Bid").value = '';
 }
+
 function placeBid2() {
     let text = document.getElementById("user2Bid").value;
     if(text){
@@ -54,3 +37,11 @@ function placeBid2() {
 }
 
 
+function render() {
+    let bidsHtml = "<ul class='list-group'>";
+    bidsHtml += "</ul>"
+    bids.forEach((list) => {
+        bidsHtml += `<li class="list-group-item">${list.user} ${list.bid}</li>`;
+      });
+    document.getElementById("bidDisplay").innerHTML = bidsHtml;
+}
