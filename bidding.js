@@ -5,8 +5,9 @@ if(localStorageContent === null) {
 } else {
     bids = JSON.parse(localStorage.getItem("userBids"));
 }
+
 document.getElementById("bidDisplay").innerHTML = 
-JSON.parse(localStorage.getItem("userBids"));
+localStorage.getItem("history");
 
 function placeBid1() {
     let text = document.getElementById("user1Bid").value;
@@ -36,12 +37,13 @@ function placeBid2() {
     document.getElementById("user2Bid").value = '';
 }
 
-
 function render() {
     let bidsHtml = "<ul class='list-group'>";
     bidsHtml += "</ul>"
     bids.forEach((list) => {
         bidsHtml += `<li class="list-group-item">${list.user} ${list.bid}</li>`;
       });
-    document.getElementById("bidDisplay").innerHTML = bidsHtml;
+    localStorage.setItem("history", bidsHtml);
+    let history = bidsHtml;
+    document.getElementById("bidDisplay").innerHTML = history;
 }
